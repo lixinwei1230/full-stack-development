@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color Guess</title>
+</head>
+<body onload="do_game()">
+    <script>
+        var target = ["blue", "cyan", "gold", "green", "magenta", "orange", "red", "white", "yellow"];
+        var guess_input_text;
+        var guess_input;
+        var finished = false;
+        var guesses = 0;
+        var target_index;
+
+        function do_game() {
+            var random_number = Math.random() * 9;
+            target_index = Math.floor(random_number);
+            alert("Target corlor is: " + target[target_index]);
+
+            while (!finished) {
+                guess_input_text = prompt("I am thinking of one of these colors:\n\n"+
+                                          "blue, cyan, gold, green, magenta, orange, red, white, yellow\n\n"+
+                                          "What color am I thinking of?");
+                guess_input = guess_input_text;
+                guesses += 1;
+                finished = check_guess();
+            }
+            myBody=document.getElementsByTagName("body")[0];
+            myBody.style.background=guess_input;
+            alert("You are right! You took " + guesses + " guesses!")
+        }
+
+        function check_guess() {
+            if (!isExist(guess_input)) {
+                alert("I don't recognize that color!");
+                return false;
+            }
+            if (guess_input > target[target_index]) {
+                alert("Your input is alphabetically higher than mine!");
+                return false;
+            }
+            if (guess_input < target[target_index]) {
+                alert("Your input is alphabetically lower than mine!");
+                return false;
+            }
+            return true;
+        }
+
+        function isExist(guess_input) {
+            for (color in target) {
+                if (target[color] === guess_input) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>
